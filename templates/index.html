@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burial Date Prediction</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        function autoSubmit() {
+            document.getElementById("predictionForm").submit();
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Predict Suggested Pet Burial Date</h2>
+        <form id="predictionForm" action="/predict" method="POST">
+            <div class="form-group">
+                <label for="death_date">Pet Death Date:</label>
+                <input type="date" 
+                class="form-control" 
+                id="death_date" 
+                name="death_date" 
+                required 
+                max="{{ current_date }}" 
+                onchange="autoSubmit()"> 
+            </div>  
+        </form>
+
+        {% if error %}
+            <div class="alert alert-danger mt-3">{{ error }}</div>
+        {% endif %}
+
+        {% if burial_date %}
+            <h2>Prediction Result:</h2>
+            <p><strong>Pet Death Date:</strong> {{ death_date }}</p>
+            <p><strong>Predicted Days Between Death and Burial:</strong> {{ predicted_days }}</p>
+            <p><strong>Recommended Pet Burial Date:</strong> {{ burial_date }}</p>
+            <p><strong>Pet Burial Weekday:</strong> {{ burial_weekday }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
